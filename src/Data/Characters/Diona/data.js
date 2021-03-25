@@ -69,8 +69,8 @@ const formula = {
       const flat = data.burst.hpFlat[stats.tlvl.burst]
       return [s => (hp * s.finalHP + flat) * s.heal_multi, ["finalHP", "heal_multi"]]
     },
-    dmg: stats => basicDMGFormula(data.burst.dmg[stats.tlvl.burst], stats, "skill"),
-    continuousDmg: stats => basicDMGFormula(data.burst.continuousDmg[stats.tlvl.burst], stats, "skill"),
+    dmg: stats => basicDMGFormula(data.burst.dmg[stats.tlvl.burst], stats, "burst"),
+    continuousDmg: stats => basicDMGFormula(data.burst.continuousDmg[stats.tlvl.burst], stats, "burst"),
   }
 }
 
