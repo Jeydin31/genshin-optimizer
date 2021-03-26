@@ -47,7 +47,7 @@ export const data = {
 function nyanDMG(percent, defMulti, stats, skillKey = "charged", elemental = false) {
   const val = percent / 100
   const statKey = getTalentStatKey(skillKey, stats, elemental) + "_multi"
-  return [s => (val * s.finalATK + defMulti * s.finalDEF) * s[statKey], ["finalATK", "finalDEF", statKey]]
+  return [s => val * (s.finalATK + defMulti * s.finalDEF) * s[statKey], ["finalATK", "finalDEF", statKey]]
 }
 
 const formula = {
@@ -80,7 +80,11 @@ const formula = {
     dot: stats => basicDMGFormula(data.skill.dot[stats.tlvl.skill], stats, "skill"),
   },
   burst: {
-    dmg: stats => basicDMGFormula(data.burst.dmg[stats.tlvl.burst], stats, "burst", false), //TODO physical burst dmg formula is missing
+    dmg: stats => {
+      const val = data.burst.dmg[stats.tlvl.burst] / 100
+      const statKey = `physical_burst_${stats.hitMode}`
+      return [s => val * s[statKey], [statKey]]
+    },
     dot: stats => basicDMGFormula(data.burst.dot[stats.tlvl.burst], stats, "burst"),
 
   },
